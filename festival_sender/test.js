@@ -18,6 +18,10 @@ const AI_MODEL       = "openai/gpt-4o-mini";
 
 const twilioClient = twilio(accountSid, authToken);
 
+function addGoMindzSignature(message) {
+  return `${message.trim()}\n\n— GoMindz`;
+}
+
 // ─── Change this to any festival name to test ───
 const TEST_FESTIVAL = "Diwali";
 
@@ -61,12 +65,13 @@ Rules:
     if (data.error) throw new Error(data.error.message);
 
     const message = data.choices[0].message.content.trim();
-    console.log(`📝 Generated Message:\n─────────────────────\n${message}\n─────────────────────\n`);
-    return message;
+    const finalMessage = addGoMindzSignature(message);
+    console.log(`📝 Generated Message:\n─────────────────────\n${finalMessage}\n─────────────────────\n`);
+    return finalMessage;
 
   } catch (err) {
     console.error("❌ AI failed:", err.message);
-    return `✨🎉 Wishing you a very Happy ${festivalName}! 🎊\nMay this day bring joy 😊 and prosperity 💰 to you and your family.\nHave a wonderful celebration! 🎉✨`;
+    return addGoMindzSignature(`✨🎉 Wishing you a very Happy ${festivalName}! 🎊\nMay this day bring joy 😊 and prosperity 💰 to you and your family.\nHave a wonderful celebration! 🎉✨`);
   }
 }
 

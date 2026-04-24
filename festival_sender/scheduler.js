@@ -23,6 +23,10 @@ const AI_MODEL       = "openai/gpt-4o-mini";
 
 const twilioClient = twilio(accountSid, authToken);
 
+function addGoMindzSignature(message) {
+  return `${message.trim()}\n\n— GoMindz`;
+}
+
 // ─── Get today in MM-DD format ───
 function getTodayDate() {
   const now = new Date();
@@ -79,14 +83,15 @@ Rules:
     if (data.error) throw new Error(data.error.message);
 
     const message = data.choices[0].message.content.trim();
-    console.log(`\n📝 Generated Message:\n─────────────────────\n${message}\n─────────────────────\n`);
-    return message;
+    const finalMessage = addGoMindzSignature(message);
+    console.log(`\n📝 Generated Message:\n─────────────────────\n${finalMessage}\n─────────────────────\n`);
+    return finalMessage;
 
   } catch (err) {
     console.error("❌ AI generation failed:", err.message);
     console.log("⚠️  Using fallback static message.");
     // Fallback if OpenRouter fails
-    return `✨🎉 Wishing you a very Happy ${festivalName}! 🎊✨\nMay this special day bring joy 😊, prosperity 💰, and happiness 🌟 to you and your family.\nMay every moment of this celebration be filled with love ❤️ and positivity.\nHave a safe and wonderful celebration! 🎉`;
+    return addGoMindzSignature(`✨🎉 Wishing you a very Happy ${festivalName}! 🎊✨\nMay this special day bring joy 😊, prosperity 💰, and happiness 🌟 to you and your family.\nMay every moment of this celebration be filled with love ❤️ and positivity.\nHave a safe and wonderful celebration! 🎉`);
   }
 }
 
