@@ -1,0 +1,14 @@
+{
+  "name": "festival-whatsapp-sender",
+  "version": "1.0.0",
+  "description": "Auto WhatsApp festival wishes sender",
+  "main": "scheduler.js",
+  "scripts": {
+    "start": "node scheduler.js",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "twilio": "^4.0.0",
+    "node-cron": "^3.0.0"
+  }
+}
